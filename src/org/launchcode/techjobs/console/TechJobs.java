@@ -1,8 +1,8 @@
 package org.launchcode.techjobs.console;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Scanner;
+import javafx.collections.MapChangeListener;
+
+import java.util.*;
 
 /**
  * Created by LaunchCode
@@ -38,7 +38,14 @@ public class TechJobs {
                 String columnChoice = getUserSelection("List", columnChoices);
 
                 if (columnChoice.equals("all")) {
-                    printJobs(JobData.findAll());
+                    for (HashMap<String, String> job : JobData.findAll()) {
+                        System.out.println("******");
+                        for (String each : job.keySet()) {
+                            String aValue = job.get(each);
+                            System.out.println(each + ": " + aValue);
+                        }
+                    }
+                    //printJobs(JobData.findAll());
                 } else {
 
                     ArrayList<String> results = JobData.findAll(columnChoice);
@@ -61,9 +68,24 @@ public class TechJobs {
                 String searchTerm = in.nextLine();
 
                 if (searchField.equals("all")) {
-                    System.out.println("Search all fields not yet implemented.");
-                } else {
-                    printJobs(JobData.findByColumnAndValue(searchField, searchTerm));
+
+                    for (HashMap<String, String> job : JobData.findByValue(searchTerm)) {
+                        System.out.println("******");
+                        for (String each : job.keySet()) {
+                            String aValue = job.get(each);
+                            System.out.println(each + ": " + aValue);
+                        }
+                    }
+                }
+                else {
+                    for (HashMap<String, String> job : JobData.findByColumnAndValue(searchField,searchTerm)) {
+                        System.out.println("******");
+                        for (String each : job.keySet()) {
+                            String aValue = job.get(each);
+                            System.out.println(each + ": " + aValue);
+                        }
+                    }
+                    //printJobs(JobData.findByColumnAndValue(searchField, searchTerm));
                 }
             }
         }
@@ -99,7 +121,7 @@ public class TechJobs {
             // Validate user's input
             if (choiceIdx < 0 || choiceIdx >= choiceKeys.length) {
                 System.out.println("Invalid choice. Try again.");
-            } else {
+            }   else {
                 validChoice = true;
             }
 
@@ -108,9 +130,14 @@ public class TechJobs {
         return choiceKeys[choiceIdx];
     }
 
+
     // Print a list of jobs
     private static void printJobs(ArrayList<HashMap<String, String>> someJobs) {
+        for (int i = 0; i < someJobs.size(); i++) {
+            System.out.println(someJobs.get(i));
 
-        System.out.println("printJobs is not implemented yet");
+
+        }
+
     }
 }
